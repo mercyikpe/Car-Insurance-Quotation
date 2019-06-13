@@ -30,12 +30,13 @@ function eventListeners() {
     if( make === '' || year === '' || level === '') {
       html.displayError('All the fields are mandatory');
     } else {
+
       // Make the quotation
       const insurance = new Insurance( make, year, level );
       const price = insurance.calculateQuotation(insurance);
 
       // Print the result from HTMLUI
-      html.showResults(price);
+      html.showResults(price, insurance);
     }
   })
 
@@ -156,7 +157,7 @@ HTMLUI.prototype.displayError = function(message) {
 }
 // Prints the reuslt into the HTML
 
-HTMLUI.prototype.showResults = function(price) {
+HTMLUI.prototype.showResults = function(price, insurance) {
   // Prints the result
 
   const result = document.getElementById('result');
@@ -164,9 +165,29 @@ HTMLUI.prototype.showResults = function(price) {
   // create a div with the result
   const div = document.createElement('div');
 
+  // Get Make from the object and assign readable name
+  let make = insurance.make;
+
+  switch(make) {
+    case '1':
+      make = 'American';
+      break;
+    case '2':
+      make = 'Asian';
+      break; 
+    case '1':
+      make = 'European';
+      break;     
+  }
+
+
   // Insert the result
   div.innerHTML =  `
-    <p class="total">Total: &#8358; ${price}</p>
+    <p class="header"><h3>Summary</h3></p>
+    <p>Make: ${make}</p>
+    <p>Year: ${insurance.year}</p>
+    <p>Make: ${insurance.level}</p>
+    <p class="total">Total: &#8358;${price}</p>
   `;
 
   // Insert this into the HTML
