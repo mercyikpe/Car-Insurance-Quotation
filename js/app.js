@@ -33,6 +33,9 @@ function eventListeners() {
       // Make the quotation
       const insurance = new Insurance( make, year, level );
       const price = insurance.calculateQuotation(insurance);
+
+      // Print the result from HTMLUI
+      html.showResults(price);
     }
   })
 
@@ -83,12 +86,32 @@ Insurance.prototype.calculateQuotation = function(insurance) {
   
   // Each year the cost of the insurance will be 3% cheaper
   price = price - ((difference * 3) * price) / 100;
-  console.log(price);
+  
+  // Check the level of protection
+  const level = insurance.level;
+
+  price = this.calculateLevel(price, level);
+
+  return price;
 }
 
 // Returns the difference between years
 Insurance.prototype.getYearDifference = function(year) {
    return new Date().getFullYear() - year;
+}
+
+// Adds the vlaue based on the level of protection
+Insurance.prototype.calculateLevel = function(price, level) {
+  /*
+    Basic Insurance increase by 30%
+    Complete Insurance increase by 50% 
+  */
+  if(level === 'basic') {
+    price = price * 1.30;
+  } else {
+    price = price * 1.50;
+  }
+  return price;
 }
 
 
