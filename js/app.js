@@ -154,5 +154,22 @@ HTMLUI.prototype.displayError = function(message) {
     document.querySelector('.error').remove();
   }, 3000);
 }
+// Prints the reuslt into the HTML
 
+HTMLUI.prototype.showResults = function(price) {
+  // Prints the result
+
+  const result = document.getElementById('result');
+
+  // create a div with the result
+  const div = document.createElement('div');
+
+  // Insert the result
+  div.innerHTML =  `
+    <p class="total">Total: &#8358; ${price}</p>
+  `;
+
+  // Insert this into the HTML
+  result.appendChild(div);
+}
 
